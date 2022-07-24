@@ -20,7 +20,8 @@ def post_detail(request, year, month, day, post):
 def post_share(request, post_id):
     # Retrieve post by id
     post = get_object_or_404(Post, id=post_id, status='published')
-    if request.methdo == 'POST':
+    sent = False
+    if request.method == 'POST':
         # Form was submitted
         form = EmailPostForm(request.POST)
         if form.is_valid():
@@ -33,4 +34,4 @@ def post_share(request, post_id):
             sent = True
     else:
         form = EmailPostForm()
-    return render(request, 'blog/post/share.html', {'post': post, 'form': form})
+    return render(request, 'blog/post/share.html', {'post': post, 'form': form, 'sent': sent})
